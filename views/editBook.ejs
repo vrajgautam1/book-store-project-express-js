@@ -1,0 +1,100 @@
+<%- include("./partials/header.ejs")%>
+
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="page-title mb-3 display-5 text-center">Add book in your store using this form</h4>
+
+                <div class="row align-items-center justify-content-center">
+                    <!-- Form Section -->
+                    <div class="col-md-10">
+                        <form class="p-4 bg-light shadow rounded" id="bookForm" method="post" action="/adminPanel/edit/<%= book._id %>">
+
+                            <div class="mb-3">
+                                <label for="bookName" class="form-label">Book name</label>
+                                <input type="text" class="form-control" id="bookName" name="bookName" value="<%= book.bookName %>">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="publication" class="form-label">Publication name</label>
+                                <input type="text" class="form-control" id="publicat ion" name="publication" value="<%= book.publication %>">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="author" class="form-label">Author</label>
+                                <input type="text" class="form-control" id="author" name="author" value="<%= book.author %>">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="actualPrice" class="form-label">Add actual price</label>
+                                <input type="number" class="form-control" id="actualPrice" name="actualPrice" value="<%= book.actualPrice %>">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="finalPrice" class="form-label">Add final price</label>
+                                <input type="number" class="form-control" id="finalPrice" name="finalPrice" value="<%= book.finalPrice %>">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="imgUrl" class="form-label">Add image url</label>
+                                <input type="url" class="form-control" id="imgUrl" name="imgUrl" value="<%= book.imgUrl %>">
+                            </div>
+
+                            <div class="mb-3">
+                                <p>Add tags</p>
+                            
+                                <label for="bestseller" class="form-label">Bestseller</label>
+                                <input type="checkbox" id="bestseller" name="tags" value="bestseller" 
+                                    <%= book.tags.includes("bestseller") ? "checked" : "" %> >
+                            
+                                <label for="new" class="form-label">New</label>
+                                <input type="checkbox" id="new" name="tags" value="new" 
+                                    <%= book.tags.includes("new") ? "checked" : "" %> >
+                            </div>
+                            
+
+                            <div class="mb-3" id="productQtyDiv">
+                                <label for="bookQuantity" class="form-label">Add quantity *Optional</label>
+                                <input type="number" class="form-control" id="bookQuantity" name="bookQuantity" 
+                                    value="<%= book.bookQuantity ? book.bookQuantity : 1 %>">
+                                <p id="errorMsg" class="text-danger mt-2" style="display: none;">Product Quantity cannot be less than 1</p>
+                            </div>
+                            
+
+                            <div class="w-75 mx-auto">
+                                <button type="submit" class="btn btn-primary w-100">Add book in Database</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let bookQuantity = document.getElementById("bookQuantity");
+    let errorMsg = document.getElementById("errorMsg");
+
+    // Ensure the input does not go below 1
+    bookQuantity.addEventListener("input", function() {
+        if (bookQuantity.value < 1) {
+            errorMsg.style.display = "block";
+            bookQuantity.value = 1; // Reset to 1 if invalid
+        } else {
+            errorMsg.style.display = "none";
+        }
+    });
+
+    // Ensure form submission always has a valid quantity
+    document.getElementById("bookForm").addEventListener("submit", function(event) {
+        if (bookQuantity.value < 1 || bookQuantity.value.trim() === "") {
+            bookQuantity.value = 1; // Default to 1 if empty or invalid
+        }
+    });
+</script>
+
+
+
+<%- include("./partials/footer.ejs")%>

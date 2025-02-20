@@ -1,0 +1,61 @@
+<%- include("./partials/header.ejs") %>
+
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="page-title mb-3 display-5 text-center">View added books here</h4>
+
+                <div class="row align-items-center justify-content-center">
+                    <!-- books will be added here -->
+
+                    <% if(error){ %>
+                        <p class="text-danger"><%= error %></p>
+                    <% } %> <!-- ✅ Fixed Closing Tag -->
+
+                    <% books.forEach((book) => { %>
+                        <div class="container mb-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body row">
+                                            <div class="col-2">
+                                                <img src="<%= book.imgUrl %>" class="card-img-top w-50" alt="Book Image">
+                                            </div>
+
+                                            <div class="col-10">
+                                                <h5 class="card-title"><%= book.bookName %></h5>
+                                                <p class="card-text"><strong>Author:</strong> <%= book.author %></p>
+                                                <p class="card-text"><strong>Publication:</strong> <%= book.publication %></p>
+                                                <p class="card-text"><strong>Actual Price:</strong> ₹<%= book.actualPrice %></p>
+                                                <p class="card-text"><strong>Final Price:</strong> ₹<%= book.finalPrice %></p>
+
+                                                <p class="card-text"><strong>Tags:</strong> 
+                                                    <% book.tags.forEach(tag => { %>
+                                                        <span class="badge bg-primary"><%= tag %></span>
+                                                    <% }) %>
+                                                </p>
+
+                                                <p class="card-text"><strong>Stock:</strong> <%= book.bookQuantity %> available</p>
+                                                <p class="card-text text-muted"><strong>Created:</strong> <%= new Date(book.createdAt).toLocaleString() %></p>
+                                                <p class="card-text text-muted"><strong>Last Updated:</strong> <%= new Date(book.updatedAt).toLocaleString() %></p>
+
+                                                <div>
+                                                    <a href="/adminPanel/edit/<%= book._id%>" class="btn btn-warning">Edit</a>
+                                                    <a href="/adminPanel/delete/<%= book._id %>" class="btn btn-danger">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("./partials/footer.ejs")%>

@@ -9,7 +9,8 @@
   <body>
     <div class="container">
       <main class="form-signin w-25 m-auto mt-5">
-        <form method="post" action="/adminSignUp" class="d-flex flex-column gap-2" onsubmit="return validatePasswords()">
+
+        <form method="POST" action="/adminSignUp" class="d-flex flex-column gap-2" onsubmit="return validatePasswords()">
           <h1 class="h3 mb-3 fw-normal">Administrator Sign-Up</h1>
           <p class="fw-normal">Enter your email and password for signup</p>
 
@@ -31,7 +32,15 @@
           <p id="error-message" class="text-danger"></p>
 
           <button class="btn btn-primary w-100 py-2" type="submit">Sign Up</button>
+
+          <% if (error) { %>
+            <p class="text-danger"><%= error %></p>
+          <% } %>
         </form>
+
+        <p class="mt-2">Already a user? <a href="/adminLogin" class="">Login</a></p>
+
+        
       </main>
     </div>
 
